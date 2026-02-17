@@ -1,65 +1,41 @@
 # AI Experts Assignment (Python)
 
-This assignment evaluates your ability to:
+This project demonstrates setting up a small Python project to run reliably (locally + in Docker), pinning dependencies for reproducible installs, writing focused tests to reproduce a bug, and implementing a minimal, reviewable fix.
 
-- set up a small Python project to run reliably (locally + in Docker),
-- pin dependencies for reproducible installs,
-- write focused tests to reproduce a bug,
-- implement a minimal, reviewable fix.
+## Project Structure
 
-## What you will do
+- `app/` — Application code (`http_client.py`, `tokens.py`)
+- `tests/` — Test suite (`test_http_client.py`)
+- `dockerfile` — Runs the test suite in a CI-style container
+- `requirements.txt` — Pinned dependencies
+- `EXPLANATION.md` — Bug analysis and fix explanation
 
-### 1) Dockerfile (required)
+## How to Run Tests Locally
 
-Create a `Dockerfile` so the project can run the test suite in a non-interactive, CI-style environment.
+1. **Set up a virtual environment (optional but recommended):**
+   ```bash
+   python -m venv venv
+   .\venv\Scripts\Activate
+   ```
 
-Requirements:
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-- requirements.txt exists and is used during build (pip install -r requirements.txt)
-- pytest must be included/pinned in requirements.txt
-- The image must run tests by default (use: `CMD ["python", "-m", "pytest", "-v"]`).
-- The build must install dependencies from `requirements.txt`.
+3. **Run tests:**
+   ```bash
+   python -m pytest -v
+   ```
 
-### 2) requirements.txt (required)
+## How to Build and Run Tests with Docker
 
-Create a `requirements.txt` with pinned versions, using this format:
+1. **Build the Docker image:**
+   ```bash
+   docker build -t ai-experts-app .
+   ```
 
-- `package==x.y.z`
-
-### 3) README updates (required)
-
-Update this README to include:
-
-- how to run the tests locally,
-- how to build and run tests with Docker.
-
-### 4) Find + fix a bug (required)
-
-There is a bug somewhere in this repository.
-
-Your tasks:
-
-- Identify the bug through reading code and/or running tests.
-- Write tests that reproduce the bug (tests should fail on the current code).
-- Apply the smallest possible fix to make the tests pass.
-- Keep the change minimal and reviewable (no refactors).
-
-## Constraints
-
-- Keep changes minimal and reviewable.
-- Do not refactor unrelated code.
-- Do not introduce extra tooling unless required.
-- You may add tests and the smallest code change needed to fix the bug.
-
-### 5) EXPLANATION.md (required)
-
-Create `EXPLANATION.md` (max 250 words) containing:
-
-- **What was the bug?**
-- **Why did it happen?**
-- **Why does your fix solve it?**
-- **One realistic case / edge case your tests still don’t cover**
-
-## Submission
-
-- Submit a public GitHub repository URL containing your solution to the Google form link provided.
+2. **Run the tests in a container:**
+   ```bash
+   docker run --rm ai-experts-app
+   ```
